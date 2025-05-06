@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  color-scheme: dark;
+}
+html {
+  background-color: #09090b;
+  color-scheme: dark;
+}
+body {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
