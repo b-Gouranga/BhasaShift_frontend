@@ -1,9 +1,37 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { InputField } from "@/components/InputField";
 import { Textarea } from "@/components/Textarea";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [signedUp, setSignedUp] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("bhasashift-loggedin") === "true") {
+      router.push("/profile");
+    }
+    if (localStorage.getItem("bhasashift-user")) {
+      setSignedUp(true);
+    }
+  }, [router]);
+  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const user = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+      bio: formData.get("bio") as string,
+    };
+    localStorage.setItem("bhasashift-user", JSON.stringify(user));
+    router.push("/login");
+  };
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-950 dark:to-blue-950 px-2">
       <div className="w-full max-w-md h-fit min-h-[420px] space-y-8 p-8 bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-2xl mx-auto border border-blue-100 dark:border-blue-900 backdrop-blur-md">
@@ -11,61 +39,67 @@ export default function SignupPage() {
           <Image src="/globe.svg" alt="Logo" width={48} height={48} className="mb-1" />
           <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">Create your account</h2>
         </div>
-        <form className="space-y-3"> {/* Further reduced vertical gap between form elements */}
-          <div className="grid gap-1"> {/* Further reduced gap between fields */}
-            {/* Name Field */}
-            <InputField
-              id="name"
-              name="name"
-              type="text"
-              required
-              label="Full Name"
-              variant="outline"
-              size="sm" // Reduced height
-              placeholder="Your full name"
-              className="mb-0"
-            />
-            {/* Email Field */}
-            <InputField
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              label="Email"
-              variant="outline"
-              size="sm" // Reduced height
-              placeholder="you@example.com"
-              className="mb-0"
-            />
-            {/* Password Field */}
-            <InputField
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              label="Password"
-              variant="outline"
-              size="sm" // Reduced height
-              placeholder="••••••••"
-              className="mb-0"
-            />
-            {/* Bio Field (optional) */}
-            <InputField
-              as="textarea"
-              id="bio"
-              name="bio"
-              label="Bio (optional)"
-              variant="outline"
-              size="sm" // Reduced height
-              placeholder="Tell us about yourself (optional)"
-              className="mb-0"
-              rows={2}
-            />
-          </div>
-          <button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-base">Sign Up</button>
-        </form>
+        {!signedUp && (
+          <form className="space-y-3" onSubmit={handleSignup}>
+            <div className="grid gap-1"> {/* Further reduced gap between fields */}
+              {/* Name Field */}
+              <InputField
+                id="name"
+                name="name"
+                type="text"
+                required
+                label="Full Name"
+                variant="outline"
+                size="sm" // Reduced height
+                placeholder="Your full name"
+                className="mb-0"
+              />
+              {/* Email Field */}
+              <InputField
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                label="Email"
+                variant="outline"
+                size="sm" // Reduced height
+                placeholder="you@example.com"
+                className="mb-0"
+              />
+              {/* Password Field */}
+              <InputField
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                label="Password"
+                variant="outline"
+                size="sm" // Reduced height
+                placeholder="••••••••"
+                className="mb-0"
+              />
+              {/* Bio Field (optional) */}
+              <div className="mb-0">
+                <label htmlFor="bio" className="block mb-1 font-semibold text-gray-800 dark:text-gray-200">Bio (optional)</label>
+                <Textarea
+                  id="bio"
+                  name="bio"
+                  variant="outline"
+                  size="sm"
+                  placeholder="Tell us about yourself (optional)"
+                  className="mb-0 text-black"
+                  rows={2}
+                />
+              </div>
+            </div>
+            <button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-base">Sign Up</button>
+          </form>
+        )}
+        {signedUp && (
+          <div className="text-center text-green-600 font-semibold py-4">You have already signed up. Please <Link href="/login" className="text-blue-600 hover:underline font-semibold">login</Link>.</div>
+        )}
         <div className="flex items-center justify-center gap-2">
           <span className="text-sm text-gray-500 dark:text-gray-400">or</span>
         </div>

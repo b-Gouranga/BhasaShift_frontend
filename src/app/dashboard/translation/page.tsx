@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 export default function Page() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hi! Paste Assamese text and I'll translate it to English." }
+    { role: "assistant", content: "Hi! Paste BhasaShift text and I'll translate it to English." }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function Page() {
   return (
     <div className="flex flex-col h-screen bg-background">
       <header className="w-full px-4 py-6 border-b flex items-center gap-2 sticky top-0 bg-background z-10">
-        <span className="text-2xl font-bold text-primary">Assamese ↔ English Translator</span>
+        <span className="text-2xl font-bold text-primary">BhasaShift ↔ English Translator</span>
       </header>
       <main className="flex-1 flex flex-col w-full px-2 py-4 gap-4">
         <div ref={chatRef} className="flex-1 flex flex-col gap-4 overflow-y-auto pb-2">
@@ -74,7 +74,7 @@ export default function Page() {
         >
           <textarea
             className="flex-1 resize-none p-3 border rounded-2xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary min-h-[48px] max-h-32 shadow-sm"
-            placeholder="Type or paste Assamese text..."
+            placeholder="Type or paste BhasaShift text..."
             value={input}
             onChange={e => setInput(e.target.value)}
             disabled={loading}

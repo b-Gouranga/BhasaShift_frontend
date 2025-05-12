@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { createImage } from "@/services/Api";
 
-const MOCK_IMAGES = [
-  "https://placehold.co/300x200?text=Image+1",
-  "https://placehold.co/300x200?text=Image+2",
-  "https://placehold.co/300x200?text=Image+3",
-  "https://placehold.co/300x200?text=Image+4",
-];
+// const MOCK_IMAGES = [
+//   "https://placehold.co/300x200?text=Image+1",
+//   "https://placehold.co/300x200?text=Image+2",
+//   "https://placehold.co/300x200?text=Image+3",
+//   "https://placehold.co/300x200?text=Image+4",
+// ];
 
 export default function Page() {
   const [prompt, setPrompt] = useState("");
@@ -16,9 +17,19 @@ export default function Page() {
 
   const handleGenerate = async () => {
     setLoading(true);
+    try {
+      const imageFile = await createImage(prompt);
+      const imageUrl = URL.createObjectURL(imageFile);
+      setImages([imageUrl]); 
+    }
+    catch (error) {
+      console.error("Error generating images:", error);
+    }
     setImages([]);
     setTimeout(() => {
-      setImages(MOCK_IMAGES);
+      setImages(images => [
+
+      ]); 
       setLoading(false);
     }, 1500);
   };
@@ -27,12 +38,12 @@ export default function Page() {
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 flex flex-col items-center justify-start w-full px-2 py-8">
         <div className="w-full max-w-3xl bg-white dark:bg-gray-900 rounded-xl shadow p-8">
-          <h1 className="text-3xl font-bold mb-6 text-center text-primary">Generate Images from Assamese Prompt</h1>
-          <p className="text-center text-gray-500 mb-8">Type your prompt in Assamese and get AI-generated images instantly!</p>
+          <h1 className="text-3xl font-bold mb-6 text-center text-primary">Generate Images from BhasaShift Prompt</h1>
+          <p className="text-center text-gray-500 mb-8">Type your prompt in BhasaShift and get AI-generated images instantly!</p>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <input
               type="text"
-              placeholder="Enter Assamese prompt..."
+              placeholder="Enter BhasaShift prompt..."
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               className="flex-1 p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-black dark:text-white focus:ring-2 focus:ring-primary shadow-sm"

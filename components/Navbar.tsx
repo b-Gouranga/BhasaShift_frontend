@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { cn } from '../utils/cn';
 import { useRouter } from 'next/navigation';
 import React, { useState, useRef } from 'react';
-import { ThemeToggle } from './ThemeToggle';
 
 export interface NavbarProps {
   logo?: React.ReactNode;
@@ -42,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav
       className={cn(
-        'sticky top-0 z-30 w-full flex items-center justify-between px-8 py-4 bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 shadow-lg backdrop-blur-md animate-fade-in',
+        'sticky top-0 z-30 w-full flex items-center justify-between px-8 py-4 bg-gradient-to-br from-gray-900 via-gray-950 to-blue-950 border-b border-gray-800 shadow-lg backdrop-blur-md animate-fade-in',
         className
       )}
       style={{ animation: 'fadeIn 0.7s ease' }}
@@ -57,8 +56,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             height={44}
             className="transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110 drop-shadow"
           />
-          <span className="ml-2 text-2xl font-extrabold text-blue-700 dark:text-blue-400 tracking-tight transition-opacity duration-500 group-hover:opacity-80">
-            AssamAI
+          <span className="ml-2 text-2xl font-extrabold text-blue-400 tracking-tight transition-opacity duration-500 group-hover:opacity-80">
+            BhasaShift
           </span>
         </div>
       </div>
@@ -71,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <li key={link.href} className="overflow-visible">
                 <a
                   href={link.href}
-                  className="relative text-lg font-bold px-4 py-2 rounded-2xl text-gray-700 dark:text-gray-200 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-100/60 dark:hover:bg-blue-900/40 transition-all duration-200 hover:scale-105 hover:shadow-md"
+                  className="relative text-lg font-bold px-4 py-2 rounded-2xl text-gray-200 hover:text-blue-400 hover:bg-blue-900/40 transition-all duration-200 hover:scale-105 hover:shadow-md"
                 >
                   {link.label}
                 </a>
@@ -86,7 +85,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <span role="img" aria-label="profile">👤</span>
         </button>
-        <ThemeToggle />
         {rightContent}
       </div>
     </nav>
