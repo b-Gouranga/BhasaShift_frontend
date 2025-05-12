@@ -1,5 +1,5 @@
 export async function createImage(prompt: string): Promise<File> {
-  const response = await fetch('/generate/image/assamese', {
+  const response = await fetch('http://localhost:5000/generate/image/assamese', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text: prompt }),

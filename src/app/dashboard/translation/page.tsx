@@ -4,10 +4,11 @@ import React, { useState, useRef, useEffect } from "react";
 
 export default function Page() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hi! Paste BhasaShift text and I'll translate it to English." }
+    { role: "assistant", content: "Hi! Select a translation type and paste text to translate." }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [translationType, setTranslationType] = useState("engToAss"); // Default to English to Assamese
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,28 +19,77 @@ export default function Page() {
 
   const handleSend = async () => {
     if (!input.trim()) return;
-    setMessages(msgs => [
-      ...msgs,
-      { role: "user", content: input }
-    ]);
+    setMessages((msgs) => [...msgs, { role: "user", content: input }]);
     setLoading(true);
     setInput("");
-    setTimeout(() => {
-      setMessages(msgs => [
-        ...msgs,
-        { role: "assistant", content: `[Mock] English translation of: ${input}` }
-      ]);
+
+    try {
+      // Correct the API endpoints
+      const endpoint =
+        translationType === "engToAss"
+          ? "http://localhost:5000/translate/english-to-assamese"
+          : "http://localhost:5000/translate/assamese-to-english";
+
+      console.log("Sending request to endpoint:", endpoint);
+      console.log("Request body:", { text: input });
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: input }),
+      });
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Error response text:", errorText);
+        throw new Error(`Translation failed with status ${response.status}: ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      if (!data || typeof data.translated_text !== "string") {
+        throw new Error("Invalid response format: 'translated_text' is missing or not a string.");
+      }
+
+      setMessages((msgs) => [...msgs, { role: "assistant", content: data.translated_text }]);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      console.error("Error during translation:", error);
+      setMessages((msgs) => [...msgs, { role: "assistant", content: `Error: ${errorMessage}` }]);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
     <div className="flex flex-col h-screen bg-background">
       <header className="w-full px-4 py-6 border-b flex items-center gap-2 sticky top-0 bg-background z-10">
-        <span className="text-2xl font-bold text-primary">BhasaShift ↔ English Translator</span>
+        <span className="text-2xl font-bold text-primary">BhasaShift Translator</span>
       </header>
-      <main className="flex-1 flex flex-col w-full px-2 py-4 gap-4">
-        <div ref={chatRef} className="flex-1 flex flex-col gap-4 overflow-y-auto pb-2">
+      <main className="flex-1 flex flex-col w-full px-2 py-4 gap-4 overflow-y-auto">
+        <div className="flex justify-center gap-4 mb-4">
+          {/* Ensure buttons correctly update translationType */}
+          <button
+            className={`px-4 py-2 rounded-lg font-semibold shadow ${
+              translationType === "engToAss" ? "bg-primary text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setTranslationType("engToAss")}
+          >
+            English to Assamese
+          </button>
+          <button
+            className={`px-4 py-2 rounded-lg font-semibold shadow ${
+              translationType === "assToEng" ? "bg-primary text-white" : "bg-gray-200"
+            }`}
+            onClick={() => setTranslationType("assToEng")}
+          >
+            Assamese to English
+          </button>
+        </div>
+        <div ref={chatRef} className="flex-1 flex flex-col gap-4 overflow-y-auto pb-2 h-full scroll-smooth">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className={`relative flex items-end gap-2 max-w-[80%] ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
@@ -66,15 +116,15 @@ export default function Page() {
           )}
         </div>
         <form
-          className="w-full flex gap-2 items-end bg-background py-2 sticky bottom-0 z-10"
-          onSubmit={e => {
+          className="w-full flex gap-2 items-end bg-background py-2 sticky bottom-0 z-10 border-t border-gray-200 dark:border-gray-800"
+          onSubmit={(e) => {
             e.preventDefault();
             if (!loading) handleSend();
           }}
         >
           <textarea
             className="flex-1 resize-none p-3 border rounded-2xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary min-h-[48px] max-h-32 shadow-sm"
-            placeholder="Type or paste BhasaShift text..."
+            placeholder="Type or paste text..."
             value={input}
             onChange={e => setInput(e.target.value)}
             disabled={loading}
