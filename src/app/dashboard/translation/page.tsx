@@ -74,7 +74,7 @@ export default function Page() {
           {/* Ensure buttons correctly update translationType */}
           <button
             className={`px-4 py-2 rounded-lg font-semibold shadow ${
-              translationType === "engToAss" ? "bg-primary text-white" : "bg-gray-200"
+              translationType === "engToAss" ? "bg-primary text-white" : "bg-blue-500"
             }`}
             onClick={() => setTranslationType("engToAss")}
           >
@@ -82,7 +82,7 @@ export default function Page() {
           </button>
           <button
             className={`px-4 py-2 rounded-lg font-semibold shadow ${
-              translationType === "assToEng" ? "bg-primary text-white" : "bg-gray-200"
+              translationType === "assToEng" ? "bg-primary text-white" : "bg-blue-500"
             }`}
             onClick={() => setTranslationType("assToEng")}
           >

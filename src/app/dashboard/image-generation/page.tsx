@@ -18,20 +18,18 @@ export default function Page() {
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      const imageFile = await createImage(prompt);
-      const imageUrl = URL.createObjectURL(imageFile);
-      setImages([imageUrl]); 
-    }
-    catch (error) {
-      console.error("Error generating images:", error);
-    }
-    setImages([]);
-    setTimeout(() => {
-      setImages(images => [
+      const imageFile = await createImage(prompt); // Assuming this returns a File object
+      console.log("Generated File:", imageFile); // Debugging log for the File object
 
-      ]); 
+      const imageUrl = URL.createObjectURL(imageFile); // Create a URL for the File
+      console.log("Generated Image URL:", imageUrl); // Debugging log for the URL
+
+      setImages([imageUrl]); // Add the image URL to the state
+    } catch (error) {
+      console.error("Error generating images:", error);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
