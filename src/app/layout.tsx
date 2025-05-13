@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChatGPT UI Clone",
-  description: "A pixel-perfect ChatGPT UI built with Next.js 14, TailwindCSS v4, and Shadcn UI.",
+  title: "BhasaShift",
+  description: "AI-Powered Language Translation and Image Generation"
 };
 
 export default function RootLayout({

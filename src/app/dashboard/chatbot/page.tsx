@@ -23,18 +23,33 @@ export default function ChatbotPage() {
 
     try {
       setLoading(true);
-      const response = await axios.post<{ processed_text: string }>("http://localhost:6000/process/assamese", {
+      const data = {
         text: input,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      };
+
+      const response = await axios.post<{ processed_text: string }>(
+        "http://localhost:6500/process/assamese",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       console.log("Response from chatbot API:", response.data);
       const botMessage: Message = { sender: "bot", text: response.data.processed_text || "No response." };
       setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error communicating with chatbot API:", error);
+      if (error.response) {
+        console.error("Server responded with status:", error.response.status);
+        console.error("Response data:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received. Request details:", error.request);
+      } else {
+        console.error("Error setting up the request:", error.message);
+      }
       const errorMessage: Message = { sender: "bot", text: "Failed to get a response. Please try again." };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {

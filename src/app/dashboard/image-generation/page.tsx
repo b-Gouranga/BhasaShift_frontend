@@ -35,7 +35,7 @@ export default function Page() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <main className="flex-1 flex flex-col items-center justify-start w-full px-2 py-8">
-        <div className="w-full max-w-3xl bg-white dark:bg-gray-900 rounded-xl shadow p-8">
+        <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-xl shadow p-6 overflow-y-auto max-h-[600px]">
           <h1 className="text-3xl font-bold mb-6 text-center text-primary">Generate Images from BhasaShift Prompt</h1>
           <p className="text-center text-gray-500 mb-8">Type your prompt in BhasaShift and get AI-generated images instantly!</p>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -60,20 +60,15 @@ export default function Page() {
             </button>
           </div>
           {images.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-xl font-semibold mb-4 text-center text-primary">Generated Images</h2>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow border flex flex-col items-center">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full">
-                  {images.map((src, index) => (
-                    <div key={index} className="flex flex-col items-center gap-2">
-                      <img
-                        src={src}
-                        alt={`Generated ${index + 1}`}
-                        className="w-full h-auto rounded-lg border shadow"
-                      />
-                      <span className="text-xs text-gray-500">Image {index + 1}</span>
-                    </div>
-                  ))}
+            <div className="overflow-y-auto max-h-[600px]">
+              <div className="mt-8 flex flex-col items-center">
+                <h2 className="text-xl font-semibold mb-4 text-center text-primary">Generated Image</h2>
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow border flex justify-center items-center w-full max-w-lg">
+                  <img
+                    src={images[0]}
+                    alt="Generated Image"
+                    className="max-w-full max-h-[500px] h-auto rounded-lg border shadow"
+                  />
                 </div>
               </div>
             </div>
