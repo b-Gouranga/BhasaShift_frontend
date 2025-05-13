@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center gap-4 min-w-[180px]">
         <div className="mr-4 group flex items-center">
           <Image
-            src="/globe.svg"
+            src="/logo.svg"
             alt="Logo"
             width={44}
             height={44}

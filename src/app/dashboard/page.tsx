@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function DashboardHome() {
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-950 dark:to-blue-950 flex items-center justify-center px-2">
+    <div className="h-full rounded-2xl w-full bg-gradient-to-br from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-950 dark:to-blue-950 flex items-center justify-center px-2">
       <div className="w-full max-w-2xl mx-auto rounded-2xl shadow-2xl border border-blue-100 dark:border-blue-900 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-8 flex flex-col items-center gap-6">
         <div className="flex flex-col items-center gap-2">
           <Image src="/globe.svg" alt="Logo" width={48} height={48} className="mb-1" />

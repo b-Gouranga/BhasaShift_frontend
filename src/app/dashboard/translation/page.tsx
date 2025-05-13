@@ -65,7 +65,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen bg-background pt-10">
       <header className="w-full px-4 py-6 border-b flex items-center gap-2 sticky top-0 bg-background z-10">
         <span className="text-2xl font-bold text-primary">BhasaShift Translator</span>
       </header>

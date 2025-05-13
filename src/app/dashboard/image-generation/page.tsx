@@ -37,7 +37,7 @@ export default function Page() {
       <main className="flex-1 flex flex-col items-center justify-start w-full px-2 py-8">
         <div className="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-xl shadow p-6 overflow-y-auto max-h-[600px]">
           <h1 className="text-3xl font-bold mb-6 text-center text-primary">Generate Images from BhasaShift Prompt</h1>
-          <p className="text-center text-gray-500 mb-8">Type your prompt in BhasaShift and get AI-generated images instantly!</p>
+          <p className="text-center text-gray-500 mb-8">Type your prompt in BhasaShift in <b>Assamese</b> and get AI-generated images instantly!</p>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <input
               type="text"

@@ -41,7 +41,7 @@ export default function ImageCaptioningPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 dark:from-gray-900 dark:via-gray-950 dark:to-green-950 p-4 overflow-auto">
+    <div className="h-full w-full flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 dark:from-gray-900 dark:via-gray-950 dark:to-green-950 p-4 overflow-auto rounded-2xl">
       <div className="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-green-100 dark:border-green-900 backdrop-blur-md p-8 flex flex-row items-center gap-6">
         <div className="flex-1 flex flex-col items-center gap-4">
           <Image src="/caption.svg" alt="Image Captioning" width={48} height={48} className="mb-2" />
